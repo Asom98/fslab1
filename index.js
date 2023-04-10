@@ -1,13 +1,17 @@
+const { main } = require('./db.js')
+
 const express = require('express')
 const app = express()
 
-const SERVER_PORT = 3000
+require('dotenv').config();
+
+
 
 app.get("/", (req, res)=>{
     res.send("hej")
 })
 
-app.listen(SERVER_PORT, ()=>{
-    console.log(`server is up on `, SERVER_PORT)
+app.listen(process.env.SERVER_PORT, ()=>{
+    console.log(`server is up on `, process.env.SERVER_PORT)
 })
 
