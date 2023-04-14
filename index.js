@@ -1,5 +1,4 @@
-const { main, connect } = require('./db.js')
-
+const main = require('./db.js')
 const express = require('express')
 const app = express()
 
@@ -9,7 +8,7 @@ app.use(express.static("public"));
 
 
 app.get("/", (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+    res.sendFile(__dirname + "./index.html");
 });
 
 app.listen(process.env.SERVER_PORT, ()=>{
