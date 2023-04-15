@@ -6,6 +6,6 @@ const albumSchema = new mongoose.Schema({
     year: Number
 })
 
-const Album = mongoose.model('Album', albumSchema)
+const album = mongoose.model('album', albumSchema)
 
-module.exports = Album
+module.exports = album
