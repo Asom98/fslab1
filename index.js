@@ -17,27 +17,51 @@ app.get("/", async(req, res) => {
 });
 
 app.get("/api/albums", async(req, res) => {
-    res.sendFile(__dirname + "/html/addAlbum.html");
-    /*try{
+    //res.sendFile(__dirname + "/html/addAlbum.html");
+    try{
         const allAlbums = await album.find()
         res.json(allAlbums)
         
     }catch(error){
         console.log(error);
         res.status(500).send({ status: 'error', message: error });
-    }*/
+    }
 });
+
+app.get("/api/albums/:title", async(req, res)=>{
+    try{
+        const title = req.params.title
+        const query = {title : `${title}`}
+        const albumByTitle = await album.findOne(query)
+        if(!albumByTitle){
+            res.sendStatus(404)
+        }else{
+            res.json(albumByTitle)
+        }
+    }catch(error){
+        console.log(error)
+        res.sendStatus(500)
+    }
+})
 
 app.post('/api/albums', async (req,res) => { // create a album in the database if the album does not exist 
     try {
-        var data = req.body;
-        const newAlbum = new album(data);
-        await newAlbum.save();
-        res.status(201).redirect('/');
+        const data = req.body;
+        const album = await fetch(`http://localhost:3000/api/albums/${data.title}`)
+        if(album){
+            res.sendStatus(409)
+        }else{
+            const newAlbum = new album(data);
+            await newAlbum.save();
+            res.status(201).redirect('/');
+        }
+        
     } catch (error) {
         res.status(409).send({ status: 'error', message: error });
     }
 })
+
+
 
 app.listen(process.env.SERVER_PORT, ()=>{
     console.log(`server is up on `, process.env.SERVER_PORT)
