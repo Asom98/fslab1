@@ -61,6 +61,17 @@ app.post('/api/albums', async (req,res) => { // create a album in the database i
     }
 })
 
+app.put("/api/albums/:id", async(req, res)=>{
+    try{
+        const id  = req.params.id
+        const updatedAlbum = req.body
+        await album.findByIdAndUpdate(id, updatedAlbum)
+    }catch(error){
+        res.sendStatus(404)
+    }
+    
+})
+
 
 
 app.listen(process.env.SERVER_PORT, ()=>{
