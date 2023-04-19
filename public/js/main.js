@@ -3,12 +3,12 @@ const myButton = document.getElementById("addAlbumBtn");
 
 // Add a click event listener to the button
 myButton.addEventListener("click", function() {
-  // Redirect to another route
+  // Redirect to /api/albums route
   window.location.href = "/api/albums";
 });
 
 function fetchAlbums(tableId) {
-  // Fetch data from API
+  // Fetch data from /api/albums
   fetch('http://localhost:3000/api/albums')
     .then(response => response.json())
     .then(albums => {
@@ -49,16 +49,20 @@ function fetchAlbums(tableId) {
         const updateButton = document.createElement('button');
         updateButton.innerText = 'Update';
         updateButton.addEventListener('click', () => {
-          // Implement update functionality here
+          handelUpdate(album.title)
+          
         });
         actionsCell.appendChild(updateButton);
         
         // Create delete button
         const deleteButton = document.createElement('button');
         deleteButton.innerText = 'Delete';
-        deleteButton.addEventListener('click', () => {
-          // Implement delete functionality here
-          table.deleteRow(row.rowIndex);
+        deleteButton.addEventListener('click', async () => {
+        
+          handelDelete(album.title)
+          table.deleteRow(row.rowIndex)
+          
+          
         });
         actionsCell.appendChild(deleteButton);
         
@@ -73,5 +77,50 @@ function fetchAlbums(tableId) {
     })
     .catch(error => console.error(error));
 }
+
+ async function handelDelete(title){
+  let id = await fetchAlbumByTitle(title)
+  //console.log(id)
+  let text = "You are about to delete a album";
+  if (confirm(text) == true) {
+    try {
+        fetch(`http://localhost:3000/api/albums/${id}`, {
+            method: 'DELETE'
+        })
+    } catch (error) {
+        console.log(error);
+    }
+  }
+}
+
+async function fetchAlbumByTitle(title){
+
+  const album = await fetch(`http://localhost:3000/api/albums/${title}`)
+    .then(response => response.json())
+  //console.log(album._id)
+  return album._id
+
+}
+
+async function handelUpdate(orgTitle){
+  const title = document.getElementById("titleId").value;
+  const artist = document.getElementById("artistId").value;
+  const year = document.getElementById("yearId").value;
+  const data = { title: title, artist: artist, year: year };
+  try {
+      let id = await fetchAlbumByTitle(orgTitle)
+      fetch(`http://localhost:3000/api/albums/${id}`, {
+          method: 'PUT',
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data)
+      })
+  } catch (error) {
+      console.log(error);
+  }
+  
+} 
+
 
 fetchAlbums("album-table")

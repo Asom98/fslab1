@@ -47,15 +47,10 @@ app.get("/api/albums/:title", async(req, res)=>{
 app.post('/api/albums', async (req,res) => { // create a album in the database if the album does not exist 
     try {
         const data = req.body;
-        const album = await fetch(`http://localhost:3000/api/albums/${data.title}`)
-        if(album){
-            res.sendStatus(409)
-        }else{
-            const newAlbum = new album(data);
-            await newAlbum.save();
-            res.status(201).redirect('/');
-        }
-        
+        //const album = await fetch(`http://localhost:3000/api/albums/${data.title}`)
+        const newAlbum = new album(data);
+        await newAlbum.save();
+        res.status(201).redirect('/');
     } catch (error) {
         res.status(409).send({ status: 'error', message: error });
     }
@@ -68,10 +63,19 @@ app.put("/api/albums/:id", async(req, res)=>{
         await album.findByIdAndUpdate(id, updatedAlbum)
     }catch(error){
         res.sendStatus(404)
+        console.log(error)
     }
     
 })
 
+ app.delete("/api/albums/:id", async (req, res)=>{
+    try{
+        const id = req.params.id
+        await album.findByIdAndDelete(id)
+    }catch(error){
+        res.sendStatus(404)
+    }
+ })
 
 
 app.listen(process.env.SERVER_PORT, ()=>{

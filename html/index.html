@@ -14,22 +14,23 @@
             <form action="/api/albums" method="POST" class="">
 
                 <label for="title">Title</label>
-                <input type="text" id="title" name="title" required>
+                <input type="text" id="titleId" name="title" required>
 
                 <label for="artist">Artist</label>
-                <input type="text" id="artist" name="artist" required>
+                <input type="text" id="artistId" name="artist" required>
 
                 <label for="year">Year</label>
-                <input type="number" id="year" name="year" required>
+                <input type="number" id="yearId" name="year" required>
 
                 <button id="addAlbumBtn" type="submit">Add or update below</button>
 
+            
+                </div>
+                <div class="contanair justify-content-center">
+                    <h1 class="text-center ">Info!</h1>
+                    <table id="album-table"></table>
+                </div>
             </form> 
-        </div>
-        <div class="contanair justify-content-center">
-            <h1 class="text-center ">Info!</h1>
-            <table id="album-table"></table>
-        </div>
     </body>
     <script src="/public/js/main.js"></script>
 </html>
