@@ -58,11 +58,8 @@ function fetchAlbums(tableId) {
         const deleteButton = document.createElement('button');
         deleteButton.innerText = 'Delete';
         deleteButton.addEventListener('click', async () => {
-        
           handelDelete(album.title)
           table.deleteRow(row.rowIndex)
-          
-          
         });
         actionsCell.appendChild(deleteButton);
         
@@ -70,7 +67,7 @@ function fetchAlbums(tableId) {
         const detailsButton = document.createElement('button');
         detailsButton.innerText = 'Details';
         detailsButton.addEventListener('click', () => {
-          // Implement details functionality here
+          
         });
         actionsCell.appendChild(detailsButton);
       });
@@ -80,7 +77,6 @@ function fetchAlbums(tableId) {
 
  async function handelDelete(title){
   let id = await fetchAlbumByTitle(title)
-  //console.log(id)
   let text = "You are about to delete a album";
   if (confirm(text) == true) {
     try {
@@ -97,7 +93,6 @@ async function fetchAlbumByTitle(title){
 
   const album = await fetch(`http://localhost:3000/api/albums/${title}`)
     .then(response => response.json())
-  //console.log(album._id)
   return album._id
 
 }
@@ -119,8 +114,6 @@ async function handelUpdate(orgTitle){
   } catch (error) {
       console.log(error);
   }
-  
 } 
-
 
 fetchAlbums("album-table")

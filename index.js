@@ -17,7 +17,6 @@ app.get("/", async(req, res) => {
 });
 
 app.get("/api/albums", async(req, res) => {
-    //res.sendFile(__dirname + "/html/addAlbum.html");
     try{
         const allAlbums = await album.find()
         res.json(allAlbums)
@@ -44,10 +43,9 @@ app.get("/api/albums/:title", async(req, res)=>{
     }
 })
 
-app.post('/api/albums', async (req,res) => { // create a album in the database if the album does not exist 
+app.post('/api/albums', async (req,res) => {
     try {
         const data = req.body;
-        //const album = await fetch(`http://localhost:3000/api/albums/${data.title}`)
         const newAlbum = new album(data);
         await newAlbum.save();
         res.status(201).redirect('/');
