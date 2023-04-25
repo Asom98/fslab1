@@ -9,6 +9,9 @@ require('dotenv').config();
 app.use('/public', express.static(path.join(__dirname, 'public')));;
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}))
+var cors = require('cors')
+app.use(cors())
+
 
 
 
