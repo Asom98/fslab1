@@ -12,9 +12,6 @@ app.use(express.urlencoded({extended: true}))
 var cors = require('cors')
 app.use(cors())
 
-
-
-
 app.get("/", async(req, res) => {
     res.sendFile(__dirname + "/html/index.html");
 });

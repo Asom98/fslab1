@@ -9,7 +9,7 @@ myButton.addEventListener("click", function() {
 
 function fetchAlbums(tableId) {
   // Fetch data from /api/albums
-  fetch('http://localhost:3000/api/albums')
+  fetch('https://kassem-lab.onrender.com/api/albums')
     .then(response => response.json())
     .then(albums => {
       // Get table element by ID
